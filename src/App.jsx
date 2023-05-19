@@ -1,40 +1,40 @@
 import { useState, useEffect } from "react";
+import { Grid } from "@mui/material";
+import Pokemon from "./components/Pokemon";
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
-  const [pokemon2, setPokemon2] = useState({});
+
+  const getAllPokemons = async () => {
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=50&offset=0`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const arrayPokemon = data.results.map(async (pokemon) => {
+      const res = await fetch(pokemon.url);
+      const data = await res.json();
+
+      return data;
+    });
+
+    const results = await Promise.all(arrayPokemon);
+
+    setPokemon(results);
+  };
 
   useEffect(() => {
-    const consult = async () => {
-      const url = `https://pokeapi.co/api/v2/pokemon`;
-      const response = await fetch(url);
-      const data = await response.json();
-
-      const url2 = `https://pokeapi.co/api/v2/pokemon/${data.results[4].name}`;
-      const response2 = await fetch(url2);
-      const data2 = await response2.json();
-
-      setPokemon(data.results);
-      setPokemon2(data2);
-    };
-
-    consult();
+    getAllPokemons();
   }, []);
-
-  const { name, sprites } = pokemon2;
 
   return (
     <>
-      <h1>Fight Simulator Pokemon</h1>
-      {pokemon.map((poke, id) => (
-        <div key={id + 1}>
-          <h1 className="capitalize">{poke.name}</h1>
-        </div>
-      ))}
-
-      <h1>OTRO POKEMON</h1>
-      <p className="capitalize">{name}</p>
-      <img src={sprites.front_default} alt={name} />
+      <h1 className="text-6xl text-center">Fight Simulator Pokemon</h1>
+      {console.log(pokemon)}
+      <Grid container rowSpacing={1}>
+        {pokemon.map((poke) => (
+          <Pokemon poke={poke} key={poke.id} />
+        ))}
+      </Grid>
     </>
   );
 }
