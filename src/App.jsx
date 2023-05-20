@@ -27,15 +27,15 @@ function App() {
   }, []);
 
   return (
-    <>
-      <h1 className="text-6xl text-center">Fight Simulator Pokemon</h1>
-      {console.log(pokemon)}
-      <Grid container rowSpacing={1}>
+    <div className="container mx-auto">
+      <h1 className="text-6xl text-center my-5">Fight Simulator Pokemon</h1>
+      {/* {console.log(pokemon)} */}
+      <Grid container spacing={2}>
         {pokemon.map((poke) => (
           <Pokemon poke={poke} key={poke.id} />
         ))}
       </Grid>
-    </>
+    </div>
   );
 }
 
