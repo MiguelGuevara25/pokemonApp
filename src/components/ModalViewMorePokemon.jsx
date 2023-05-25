@@ -1,8 +1,8 @@
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 
-const ModalViewMorePokemon = ({ poke }) => {
+const ModalViewMorePokemon = ({ poke, setModalViewPokemon }) => {
   return (
-    <div className="fixed inset-x-0 bottom-0 top-0 z-[1000] flex w-full items-center justify-center bg-black bg-opacity-50 snap-none">
+    <div className="fixed inset-x-0 bottom-0 top-0 z-[1000] flex w-full items-center justify-center bg-black bg-opacity-50">
       <Card>
         <div className="flex items-center p-3 flex-col md:flex-row">
           <CardMedia
@@ -51,6 +51,11 @@ const ModalViewMorePokemon = ({ poke }) => {
           </CardContent>
         </div>
       </Card>
+
+      <div
+        className="absolute inset-0"
+        onClick={() => setModalViewPokemon(false)}
+      />
     </div>
   );
 };
