@@ -4,6 +4,7 @@ import Pokemon from "./components/Pokemon";
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
+  const [contadores, setContadores] = useState(0);
 
   const getAllPokemons = async () => {
     const url = `https://pokeapi.co/api/v2/pokemon?limit=50&offset=0`;
@@ -32,7 +33,12 @@ function App() {
       {/* {console.log(pokemon)} */}
       <Grid container spacing={2}>
         {pokemon.map((poke) => (
-          <Pokemon poke={poke} key={poke.id} />
+          <Pokemon
+            poke={poke}
+            key={poke.id}
+            setContadores={setContadores}
+            contadores={contadores}
+          />
         ))}
       </Grid>
     </div>

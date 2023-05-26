@@ -10,16 +10,26 @@ import ModalViewMorePokemon from "./ModalViewMorePokemon";
 import ScreenFIght from "./ScreenFIght";
 import { useState } from "react";
 
-function Pokemon({ poke }) {
+function Pokemon({ poke, setContadores, contadores }) {
   const [modalViewPokemon, setModalViewPokemon] = useState(false);
   const [modalFightPokemon, setModalFightPokemon] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [copia, setCopia] = useState([]);
 
   const showModalPokemon = () => {
     setModalViewPokemon(true);
   };
 
   const showFightPokemon = () => {
-    setModalFightPokemon(true);
+    setCounter(counter + 1);
+    setContadores(contadores + 1);
+    contadores === 1 && setModalFightPokemon(true);
+  };
+
+  const nose = () => {
+    const newArray = [1, 2, 3];
+
+    setCopia([...poke, newArray]);
   };
 
   return (
@@ -30,8 +40,9 @@ function Pokemon({ poke }) {
           setModalViewPokemon={setModalViewPokemon}
         />
       )}
+
       {modalFightPokemon && (
-        <ScreenFIght setModalFightPokemon={setModalFightPokemon} />
+        <ScreenFIght poke={poke} setModalFightPokemon={setModalFightPokemon} />
       )}
 
       <Grid item key={poke.id} xs={6} sm={4} md={3}>
@@ -49,6 +60,7 @@ function Pokemon({ poke }) {
                 className="capitalize"
               >
                 {poke.name}
+                {copia}
               </Typography>
 
               <Typography>
@@ -58,10 +70,19 @@ function Pokemon({ poke }) {
                 <Button variant="contained" onClick={showModalPokemon}>
                   View More
                 </Button>
-
-                <Button variant="contained" onClick={showFightPokemon}>
-                  Fight
-                </Button>
+                {counter === 1 ? (
+                  <Button
+                    variant="contained"
+                    disabled
+                    onClick={showFightPokemon}
+                  >
+                    Fight
+                  </Button>
+                ) : (
+                  <Button variant="contained" onClick={nose}>
+                    Fight
+                  </Button>
+                )}
               </div>
             </CardContent>
           </div>
