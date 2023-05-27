@@ -14,7 +14,6 @@ function Pokemon({ poke, setContadores, contadores }) {
   const [modalViewPokemon, setModalViewPokemon] = useState(false);
   const [modalFightPokemon, setModalFightPokemon] = useState(false);
   const [counter, setCounter] = useState(0);
-  const [copia, setCopia] = useState([]);
 
   const showModalPokemon = () => {
     setModalViewPokemon(true);
@@ -24,12 +23,6 @@ function Pokemon({ poke, setContadores, contadores }) {
     setCounter(counter + 1);
     setContadores(contadores + 1);
     contadores === 1 && setModalFightPokemon(true);
-  };
-
-  const nose = () => {
-    const newArray = [1, 2, 3];
-
-    setCopia([...poke, newArray]);
   };
 
   return (
@@ -60,7 +53,6 @@ function Pokemon({ poke, setContadores, contadores }) {
                 className="capitalize"
               >
                 {poke.name}
-                {copia}
               </Typography>
 
               <Typography>
@@ -79,7 +71,7 @@ function Pokemon({ poke, setContadores, contadores }) {
                     Fight
                   </Button>
                 ) : (
-                  <Button variant="contained" onClick={nose}>
+                  <Button variant="contained" onClick={showFightPokemon}>
                     Fight
                   </Button>
                 )}
