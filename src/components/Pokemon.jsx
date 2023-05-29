@@ -10,23 +10,22 @@ import ModalViewMorePokemon from "./ModalViewMorePokemon";
 import ScreenFIght from "./ScreenFIght";
 import { useState } from "react";
 
-function Pokemon({ poke, setContadores, contadores }) {
+function Pokemon({
+  poke,
+  modalFightPokemon,
+  setModalFightPokemon,
+  selectPokemonFight,
+  pokemones,
+}) {
   const [modalViewPokemon, setModalViewPokemon] = useState(false);
-  const [modalFightPokemon, setModalFightPokemon] = useState(false);
-  const [counter, setCounter] = useState(0);
 
   const showModalPokemon = () => {
     setModalViewPokemon(true);
   };
 
-  const showFightPokemon = () => {
-    setCounter(counter + 1);
-    setContadores(contadores + 1);
-    contadores === 1 && setModalFightPokemon(true);
-  };
-
   return (
     <>
+      {/* //!Modal de Detalles */}
       {modalViewPokemon && (
         <ModalViewMorePokemon
           poke={poke}
@@ -34,8 +33,12 @@ function Pokemon({ poke, setContadores, contadores }) {
         />
       )}
 
+      {/* //!Modal de Pelea */}
       {modalFightPokemon && (
-        <ScreenFIght poke={poke} setModalFightPokemon={setModalFightPokemon} />
+        <ScreenFIght
+          pokemones={pokemones}
+          setModalFightPokemon={setModalFightPokemon}
+        />
       )}
 
       <Grid item key={poke.id} xs={6} sm={4} md={3}>
@@ -62,19 +65,10 @@ function Pokemon({ poke, setContadores, contadores }) {
                 <Button variant="contained" onClick={showModalPokemon}>
                   View More
                 </Button>
-                {counter === 1 ? (
-                  <Button
-                    variant="contained"
-                    disabled
-                    onClick={showFightPokemon}
-                  >
-                    Fight
-                  </Button>
-                ) : (
-                  <Button variant="contained" onClick={showFightPokemon}>
-                    Fight
-                  </Button>
-                )}
+
+                <Button variant="contained" onClick={() => selectPokemonFight(poke)}>
+                  Fight
+                </Button>
               </div>
             </CardContent>
           </div>

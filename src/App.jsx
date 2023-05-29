@@ -4,7 +4,9 @@ import Pokemon from "./components/Pokemon";
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
+  const [pokemones, setPokemones] = useState([]);
   const [contadores, setContadores] = useState(0);
+  const [modalFightPokemon, setModalFightPokemon] = useState(false);
 
   const getAllPokemons = async () => {
     const url = `https://pokeapi.co/api/v2/pokemon?limit=50&offset=0`;
@@ -27,19 +29,30 @@ function App() {
     getAllPokemons();
   }, []);
 
+  const selectPokemonFight = (poke) => {
+    setPokemones([...pokemones, poke]);
+    setContadores(contadores + 1);
+    contadores === 1 && setModalFightPokemon(true);
+  };
+
   return (
     <div className="container mx-auto">
       <h1 className="text-6xl text-center my-5">Fight Simulator Pokemon</h1>
-      {/* {console.log(pokemon)} */}
       <Grid container spacing={2}>
-        {pokemon.map((poke) => (
-          <Pokemon
-            poke={poke}
-            key={poke.id}
-            setContadores={setContadores}
-            contadores={contadores}
-          />
-        ))}
+        {pokemon.map((poke) => {
+          return (
+            <Pokemon
+              poke={poke}
+              key={poke.id}
+              setContadores={setContadores}
+              contadores={contadores}
+              selectPokemonFight={selectPokemonFight}
+              pokemones={pokemones}
+              modalFightPokemon={modalFightPokemon}
+              setModalFightPokemon={setModalFightPokemon}
+            />
+          );
+        })}
       </Grid>
     </div>
   );
